@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Card 1: Status -->
+    <div class="card bg-white shadow-sm rounded-xl border border-gray-200 p-6">
+        <div class="card-header border-0 pt-5">
+            <h3 class="text-lg font-bold text-gray-900">Integrasi Tailwind Sukses!</h3>
+        </div>
+        <div class="card-body py-3">
+            <p class="text-gray-500 mb-4">
+                Jika Anda melihat tampilan ini rapi dengan font Inter, berarti style.bundle.css Tailwind sudah dimuat.
+            </p>
+            <button class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Tombol Test
+            </button>
+        </div>
+    </div>
+
+    <!-- Card 2: Info -->
+    <div class="card bg-blue-50 border border-blue-100 rounded-xl p-6">
+        <div class="flex items-center mb-4">
+            <span class="text-3xl me-3">🚀</span>
+            <h3 class="text-lg font-bold text-blue-800">Django + Tailwind</h3>
+        </div>
+        <p class="text-blue-600">
+            Sekarang Anda siap membangun aplikasi Polls dengan tampilan modern.
+        </p>
+    </div>
+
+</div>
+{% endblock %}
