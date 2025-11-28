@@ -1,95 +1,28 @@
-from pathlib import Path
-import mimetypes  # <--- 1. TAMBAHKAN IMPORT INI
+import os
+from .base import *
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# Production-specific settings
+DEBUG = False
 
-# <--- 2. TAMBAHKAN DUA BARIS INI (Wajib untuk Windows)
-mimetypes.add_type("text/css", ".css", True)
-mimetypes.add_type("application/javascript", ".js", True)
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 
-SECRET_KEY = 'django-insecure-)=z)nuzz9wuo(bqbdjyugekq-05%ehbwr(+j8watgy-8l*t5d_'
-DEBUG = True
-ALLOWED_HOSTS = []
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_REDIRECT_EXEMPT = []
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'apps.home',
-    'apps.polls',
-]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware', # <--- 3. MATIKAN (COMMENT) BARIS INI SEMENTARA
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-ROOT_URLCONF = 'metronic_project.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'metronic_project.wsgi.application'
-
+# Database configuration for production
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get('DB_NAME'),
+        "USER": os.environ.get('DB_USER'),
+        "PASSWORD": os.environ.get('DB_PASSWORD'),
+        "HOST": os.environ.get('DB_HOST', 'localhost'),
+        "PORT": os.environ.get('DB_PORT', '5432'),
     }
 }
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Jakarta'
-USE_I18N = True
-USE_TZ = True
-
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Debug print (biarkan saja, ini bagus)
-print("--- DEBUG PATH ---")
-print(f"Base Directory: {BASE_DIR}")
-print(f"Static Directory dicari di: {BASE_DIR / 'static'}")
-print("------------------")
