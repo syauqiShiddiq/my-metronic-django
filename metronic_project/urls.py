@@ -25,7 +25,7 @@ urlpatterns = [
     path('demo1/', include('apps.demo1.urls')),
     path('demo2/', include('apps.demo2.urls')),
     path('polls/', include('apps.polls.urls')),
-    path('', RedirectView.as_view(url='/demo1/', permanent=False)),
+    path('', RedirectView.as_view(url='/polls/', permanent=False)),
 ]
 
 if settings.DEBUG:
